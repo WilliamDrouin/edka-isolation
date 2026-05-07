@@ -1,0 +1,176 @@
+---
+import { mainNav } from '../lib/navigation';
+
+interface Props {
+  /** Header transparent par-dessus un hero sombre (devient opaque dès qu'on scrolle) */
+  transparent?: boolean;
+}
+
+const { transparent = false } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+const isActive = (href: string): boolean => {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+};
+---
+
+<header
+  data-transparent={transparent ? 'true' : 'false'}
+  class:list={[
+    'fixed inset-x-0 top-0 z-50 transition-all duration-300',
+    transparent
+      ? 'bg-transparent text-white'
+      : 'bg-background/90 text-foreground border-border border-b backdrop-blur-md',
+  ]}
+>
+  <div class="container-page flex h-16 items-center justify-between gap-4 sm:h-20">
+    <a href="/" class="flex items-center gap-3" aria-label="Accueil — Isolation EDKA">
+      <img src="/images/logoprincipale.jpg" alt="Isolation EDKA" class="h-10 w-auto sm:h-12" />
+    </a>
+
+    <nav aria-label="Navigation principale" class="hidden lg:block">
+      <ul class="flex items-center gap-1">
+        {
+          mainNav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+                class:list={[
+                  'rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                  'hover:bg-white/10 aria-[current=page]:text-[color:var(--color-brand-400)]',
+                ]}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="hidden items-center gap-3 lg:flex">
+      <a
+        href="/contact"
+        class:list={[
+          'inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition-all',
+          'bg-[color:var(--color-brand-600)] text-white hover:bg-[color:var(--color-brand-500)]',
+          'focus-visible:ring-2 focus-visible:ring-[color:var(--color-brand-400)] focus-visible:ring-offset-2 focus-visible:outline-none',
+        ]}
+      >
+        Soumission gratuite
+        <svg
+          aria-hidden="true"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M5 12h14M13 5l7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+
+    <button
+      type="button"
+      id="mobile-menu-toggle"
+      class:list={[
+        'lg:hidden',
+        'inline-flex h-10 w-10 items-center justify-center rounded-md',
+        'hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-[color:var(--color-brand-400)] focus-visible:outline-none',
+      ]}
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+      aria-label="Ouvrir le menu"
+    >
+      <svg
+        class="h-6 w-6"
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <line x1="4" y1="6" x2="20" y2="6"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="18" x2="20" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div
+    id="mobile-menu"
+    hidden
+    class:list={[
+      'lg:hidden',
+      'border-border/40 bg-background text-foreground border-t',
+      'animate-in slide-in-from-top-2 duration-200',
+    ]}
+  >
+    <nav aria-label="Navigation mobile" class="container-page py-4">
+      <ul class="space-y-1">
+        {
+          mainNav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+                class:list={[
+                  'block rounded-md px-3 py-3 text-base font-medium transition-colors',
+                  'hover:bg-muted aria-[current=page]:bg-muted aria-[current=page]:text-[color:var(--color-brand-600)]',
+                ]}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a
+        href="/contact"
+        class="bg-primary text-primary-foreground hover:bg-[color:var(--color-brand-500)] mt-4 inline-flex w-full items-center justify-center rounded-md px-4 py-3 text-base font-semibold transition-colors"
+      >
+        Soumission gratuite
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('header[data-transparent]');
+  const toggle = document.querySelector<HTMLButtonElement>('#mobile-menu-toggle');
+  const menu = document.querySelector<HTMLElement>('#mobile-menu');
+
+  if (header?.dataset.transparent === 'true') {
+    const SCROLL_THRESHOLD = 24;
+    const onScroll = (): void => {
+      const scrolled = window.scrollY > SCROLL_THRESHOLD;
+      header.classList.toggle('bg-transparent', !scrolled);
+      header.classList.toggle('text-white', !scrolled);
+      header.classList.toggle('bg-background/90', scrolled);
+      header.classList.toggle('text-foreground', scrolled);
+      header.classList.toggle('border-b', scrolled);
+      header.classList.toggle('border-border', scrolled);
+      header.classList.toggle('backdrop-blur-md', scrolled);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      const next = !isOpen;
+      toggle.setAttribute('aria-expanded', String(next));
+      toggle.setAttribute('aria-label', next ? 'Fermer le menu' : 'Ouvrir le menu');
+      menu.hidden = !next;
+    });
+  }
+</script>
