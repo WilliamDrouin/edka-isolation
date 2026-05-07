@@ -1,0 +1,127 @@
+---
+interface Stat {
+  valeur: number;
+  prefixe?: string;
+  suffixe?: string;
+  decimales?: number;
+  label: string;
+  description: string;
+}
+
+const stats: readonly Stat[] = [
+  {
+    valeur: 40,
+    suffixe: '%',
+    label: "d'économies",
+    description: 'Réduction typique des coûts de chauffage avec une isolation aux normes 2025.',
+  },
+  {
+    valeur: 50,
+    prefixe: 'R-',
+    label: 'valeur d\'isolation',
+    description: 'Combles isolés à la cellulose ou à l\'uréthane atteignant les recommandations LogisVert.',
+  },
+  {
+    valeur: 2,
+    prefixe: '-',
+    suffixe: ' t',
+    label: 'CO₂ évitées par année',
+    description: 'Empreinte carbone d\'une maison résidentielle bien isolée vs. mal isolée.',
+  },
+  {
+    valeur: 25,
+    suffixe: ' ans+',
+    label: "d'expérience",
+    description: 'Une équipe locale qui connaît les défis du climat beauceron.',
+  },
+] as const;
+---
+
+<section
+  id="economies"
+  class="dark text-foreground bg-background relative overflow-hidden py-24 sm:py-32"
+>
+  <div
+    class="pointer-events-none absolute inset-0 -z-10 opacity-30 [background-image:radial-gradient(closest-side,var(--color-brand-600),transparent)] [background-position:80%_-20%] [background-repeat:no-repeat] [background-size:60%_60%]"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="container-page">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="text-[color:var(--color-brand-300)] text-sm font-semibold tracking-widest uppercase">
+        Performance thermique
+      </p>
+      <h2 class="font-display mt-3 text-3xl font-bold sm:text-4xl">
+        L'isolation, ça paye. Vite.
+      </h2>
+      <p class="mt-4 text-lg text-slate-300">
+        Une enveloppe thermique bien conçue, c'est moins de chauffage, plus de confort, et des
+        économies qui durent toute la vie du bâtiment.
+      </p>
+    </div>
+
+    <ul class="mt-16 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        stats.map((stat) => (
+          <li class="text-center sm:text-left">
+            <p
+              class="font-display text-[color:var(--color-brand-300)] text-5xl leading-none font-bold sm:text-6xl"
+              data-stat-value
+              data-target={stat.valeur}
+              data-prefix={stat.prefixe ?? ''}
+              data-suffix={stat.suffixe ?? ''}
+              data-decimals={stat.decimales ?? 0}
+            >
+              {stat.prefixe ?? ''}0{stat.suffixe ?? ''}
+            </p>
+            <p class="mt-3 text-base font-semibold text-white">{stat.label}</p>
+            <p class="mt-2 text-sm text-slate-400">{stat.description}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<script>
+  import { animate, inView } from 'motion';
+
+  type StatConfig = {
+    target: number;
+    prefix: string;
+    suffix: string;
+    decimals: number;
+  };
+
+  const parseConfig = (el: HTMLElement): StatConfig => ({
+    target: Number(el.dataset.target ?? '0'),
+    prefix: el.dataset.prefix ?? '',
+    suffix: el.dataset.suffix ?? '',
+    decimals: Number(el.dataset.decimals ?? '0'),
+  });
+
+  const formatValue = (value: number, config: StatConfig): string => {
+    const rounded = config.decimals === 0 ? Math.round(value) : Number(value.toFixed(config.decimals));
+    return `${config.prefix}${rounded}${config.suffix}`;
+  };
+
+  const elements = document.querySelectorAll<HTMLElement>('[data-stat-value]');
+
+  elements.forEach((el) => {
+    const config = parseConfig(el);
+    inView(
+      el,
+      () => {
+        animate(0, config.target, {
+          duration: 1.6,
+          ease: [0.16, 1, 0.3, 1],
+          onUpdate: (latest) => {
+            el.textContent = formatValue(latest, config);
+          },
+        });
+      },
+      { amount: 0.5 },
+    );
+  });
+</script>

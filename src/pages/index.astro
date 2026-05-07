@@ -2,15 +2,22 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
 import heroImage from '../assets/images/hero/hero.jpg';
+import ServicesPreview from '../components/sections/ServicesPreview.astro';
+import EconomiesSection from '../components/sections/EconomiesSection.astro';
+import ProjetsRecents from '../components/sections/ProjetsRecents.astro';
+import SubventionsTeaser from '../components/sections/SubventionsTeaser.astro';
+import Temoignages from '../components/sections/Temoignages.astro';
+import CtaFinal from '../components/sections/CtaFinal.astro';
 ---
 
 <BaseLayout
   title="Isolation EDKA — Spécialiste en isolation à Saint-Georges-de-Beauce"
-  description="Uréthane giclé, cellulose, fibre de verre. Économies de chauffage jusqu'à 40 %. Subventions Rénoclimat admissibles. Soumission gratuite."
+  description="Uréthane giclé, cellulose, fibre de verre. Économies de chauffage jusqu'à 40 %. Subventions Rénoclimat, LogisVert et Chauffez vert admissibles. Soumission gratuite en Beauce."
   transparentHeader={true}
 >
-  {/* Hero plein écran sombre — fondations seulement, sera étoffé à l'Étape 3.2 */}
-  <section class="dark text-foreground relative isolate flex min-h-[100svh] items-end overflow-hidden">
+  <section
+    class="dark text-foreground relative isolate flex min-h-[100svh] items-end overflow-hidden"
+  >
     <Image
       src={heroImage}
       alt="Chantier d'isolation Isolation EDKA"
@@ -22,6 +29,7 @@ import heroImage from '../assets/images/hero/hero.jpg';
     />
     <div
       class="absolute inset-0 -z-10 bg-gradient-to-b from-slate-950/40 via-slate-950/60 to-slate-950/95"
+      aria-hidden="true"
     >
     </div>
 
@@ -69,13 +77,10 @@ import heroImage from '../assets/images/hero/hero.jpg';
     </div>
   </section>
 
-  {/* Placeholder pour le reste — sera étoffé à l'Étape 3.2 */}
-  <section class="container-page py-24 sm:py-32">
-    <h2 class="font-display text-3xl font-bold sm:text-4xl">Étape 3.1 — Foundations en place</h2>
-    <p class="text-muted-foreground mt-3 max-w-2xl">
-      Header sticky, Footer, design tokens, polices Inter + Space Grotesk, navigation 6 pages : ✓.
-      Le contenu de la page d'accueil (services, économies, projets, témoignages) sera ajouté à
-      l'Étape 3.2.
-    </p>
-  </section>
+  <ServicesPreview />
+  <EconomiesSection />
+  <ProjetsRecents />
+  <SubventionsTeaser />
+  <Temoignages />
+  <CtaFinal />
 </BaseLayout>

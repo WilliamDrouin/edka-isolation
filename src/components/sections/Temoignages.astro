@@ -1,0 +1,70 @@
+---
+interface Temoignage {
+  citation: string;
+  auteur: string;
+  contexte: string;
+}
+
+// Placeholder — vrais témoignages clients à intégrer plus tard
+const temoignages: readonly Temoignage[] = [
+  {
+    citation:
+      'Travail propre, rapide, et l\'équipe a pris le temps de tout expliquer. Ma facture de chauffage a baissé dès le premier hiver.',
+    auteur: 'Marie-Claude L.',
+    contexte: 'Maison résidentielle · Saint-Georges',
+  },
+  {
+    citation:
+      "Pour notre ferme laitière, c'était un défi technique. Ils ont livré exactement ce qui était promis, dans les délais.",
+    auteur: 'Jean-François R.',
+    contexte: 'Ferme laitière · Beauce-Sartigan',
+  },
+  {
+    citation:
+      'On nous a guidés à travers les subventions Rénoclimat. Ça vaut son pesant d\'or quand on déteste la paperasse.',
+    auteur: 'Sylvie T.',
+    contexte: 'Rénovation maison · La Guadeloupe',
+  },
+] as const;
+---
+
+<section id="temoignages" class="container-page py-20 sm:py-28">
+  <div class="mx-auto max-w-2xl text-center">
+    <p class="text-[color:var(--color-brand-600)] text-sm font-semibold tracking-widest uppercase">
+      Ils nous font confiance
+    </p>
+    <h2 class="font-display mt-3 text-3xl font-bold sm:text-4xl">
+      Ce qu'on entend après les chantiers.
+    </h2>
+  </div>
+
+  <ul class="mt-12 grid gap-6 lg:grid-cols-3">
+    {
+      temoignages.map((t) => (
+        <li>
+          <figure class="bg-card flex h-full flex-col rounded-xl border p-6">
+            <svg
+              aria-hidden="true"
+              class="text-[color:var(--color-brand-300)] h-8 w-8"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z" />
+            </svg>
+            <blockquote class="mt-4 flex-1 text-base leading-relaxed">
+              <p>« {t.citation} »</p>
+            </blockquote>
+            <figcaption class="mt-6 border-t pt-4">
+              <p class="font-display text-sm font-semibold">{t.auteur}</p>
+              <p class="text-muted-foreground text-xs">{t.contexte}</p>
+            </figcaption>
+          </figure>
+        </li>
+      ))
+    }
+  </ul>
+
+  <p class="text-muted-foreground/80 mt-8 text-center text-xs italic">
+    Témoignages à valider avec le client avant publication.
+  </p>
+</section>

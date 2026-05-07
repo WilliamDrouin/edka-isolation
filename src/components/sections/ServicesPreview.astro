@@ -1,0 +1,127 @@
+---
+interface Service {
+  titre: string;
+  description: string;
+  href: string;
+  iconPath: string;
+}
+
+const services: readonly Service[] = [
+  {
+    titre: 'Uréthane giclé',
+    description:
+      "Mousse polyuréthane projetée à haute valeur R, parfaite étanchéité à l'air et à l'humidité.",
+    href: '/services#urethane',
+    iconPath:
+      'M3 12c0-4.97 4.03-9 9-9s9 4.03 9 9v6a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-6Z M7 14l3 3 7-7',
+  },
+  {
+    titre: 'Cellulose soufflée',
+    description:
+      "Isolant écologique haute performance, idéal pour les combles et murs existants.",
+    href: '/services#cellulose',
+    iconPath:
+      'M12 2v4 M4.93 7.93l2.83 2.83 M19.07 7.93l-2.83 2.83 M2 14h4 M18 14h4 M5.5 19l3-3 M18.5 19l-3-3 M9 14a3 3 0 1 1 6 0c0 1.66-1.34 3-3 3s-3-1.34-3-3Z',
+  },
+  {
+    titre: 'Fibre de verre',
+    description:
+      'Solution éprouvée et économique pour murs, plafonds et planchers neufs.',
+    href: '/services#fibre-verre',
+    iconPath:
+      'M3 6h18 M3 10h18 M3 14h18 M3 18h18',
+  },
+  {
+    titre: 'Combles & toitures',
+    description:
+      "Réduisez les pertes de chaleur par le toit, là où l'air chaud s'échappe.",
+    href: '/services#combles',
+    iconPath: 'M3 12L12 3l9 9 M5 10v10h14V10',
+  },
+  {
+    titre: 'Sous-sols & vides sanitaires',
+    description:
+      "Murs de fondation, planchers froids, vides sanitaires : on s'attaque aux ponts thermiques.",
+    href: '/services#sous-sol',
+    iconPath: 'M3 7h18v10H3z M3 12h18 M9 7v10 M15 7v10',
+  },
+  {
+    titre: 'Commercial & industriel',
+    description:
+      "Bâtiments agricoles, complexes industriels, remorques et entrepôts. Solutions sur mesure.",
+    href: '/services#commercial',
+    iconPath:
+      'M3 21V8l9-5 9 5v13 M9 21V12h6v9 M3 21h18',
+  },
+] as const;
+---
+
+<section id="services" class="container-page py-20 sm:py-28">
+  <div class="mx-auto max-w-2xl text-center">
+    <p class="text-[color:var(--color-brand-600)] text-sm font-semibold tracking-widest uppercase">
+      Nos services
+    </p>
+    <h2 class="font-display mt-3 text-3xl font-bold sm:text-4xl">
+      Toutes les solutions d'isolation, sous un même toit.
+    </h2>
+    <p class="text-muted-foreground mt-4 text-lg">
+      Du résidentiel à l'industriel, on a la technique adaptée à chaque bâtiment.
+    </p>
+  </div>
+
+  <ul class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      services.map((service) => (
+        <li>
+          <a
+            href={service.href}
+            class:list={[
+              'group bg-card relative flex h-full flex-col rounded-xl border p-6 transition-all',
+              'hover:border-[color:var(--color-brand-400)] hover:shadow-lg hover:-translate-y-0.5',
+              'focus-visible:ring-2 focus-visible:ring-[color:var(--color-brand-400)] focus-visible:outline-none',
+            ]}
+          >
+            <span
+              class="bg-[color:var(--color-brand-50)] text-[color:var(--color-brand-600)] inline-flex h-12 w-12 items-center justify-center rounded-lg"
+              aria-hidden="true"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d={service.iconPath} />
+              </svg>
+            </span>
+            <h3 class="font-display mt-5 text-xl font-semibold">{service.titre}</h3>
+            <p class="text-muted-foreground mt-2 text-sm leading-relaxed">{service.description}</p>
+            <span
+              class="text-[color:var(--color-brand-600)] mt-5 inline-flex items-center gap-1 text-sm font-semibold"
+              aria-hidden="true"
+            >
+              En savoir plus
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="transition-transform group-hover:translate-x-0.5"
+              >
+                <path d="M5 12h14M13 5l7 7-7 7" />
+              </svg>
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>

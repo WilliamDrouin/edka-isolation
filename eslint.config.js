@@ -34,6 +34,14 @@ export default tseslint.config(
     },
   },
   {
+    files: ['**/*.astro'],
+    languageOptions: {
+      globals: {
+        ImageMetadata: 'readonly',
+      },
+    },
+  },
+  {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       parserOptions: {

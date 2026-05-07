@@ -1,0 +1,105 @@
+---
+import { Image } from 'astro:assets';
+import cabaneApres from '../../assets/images/realisations/cabaneapresisolation.jpg';
+import complexIndustriel from '../../assets/images/realisations/complexindustriel.jpg';
+import fermeLaitiere from '../../assets/images/realisations/fermelaitiereisolation.jpg';
+
+interface Projet {
+  titre: string;
+  categorie: string;
+  description: string;
+  image: ImageMetadata;
+  href: string;
+}
+
+const projets: readonly Projet[] = [
+  {
+    titre: 'Chalet rénové en Beauce',
+    categorie: 'Résidentiel · Avant/Après',
+    description: 'Reprise complète de l\'enveloppe : combles, murs, sous-sol. Confort transformé.',
+    image: cabaneApres,
+    href: '/realisations',
+  },
+  {
+    titre: 'Complexe industriel',
+    categorie: 'Commercial',
+    description: 'Isolation des plafonds et murs périphériques. Réduction des pertes thermiques de 35 %.',
+    image: complexIndustriel,
+    href: '/realisations',
+  },
+  {
+    titre: 'Ferme laitière',
+    categorie: 'Agricole',
+    description: 'Étable et bâtiments de production : uréthane giclé pour une étanchéité maximale.',
+    image: fermeLaitiere,
+    href: '/realisations',
+  },
+] as const;
+---
+
+<section id="realisations-preview" class="container-page py-20 sm:py-28">
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div class="max-w-xl">
+      <p class="text-[color:var(--color-brand-600)] text-sm font-semibold tracking-widest uppercase">
+        Projets récents
+      </p>
+      <h2 class="font-display mt-3 text-3xl font-bold sm:text-4xl">
+        On laisse les chantiers parler.
+      </h2>
+    </div>
+    <a
+      href="/realisations"
+      class="text-[color:var(--color-brand-600)] hover:text-[color:var(--color-brand-700)] inline-flex items-center gap-1 text-sm font-semibold transition-colors"
+    >
+      Voir toutes les réalisations
+      <svg
+        aria-hidden="true"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M5 12h14M13 5l7 7-7 7"></path>
+      </svg>
+    </a>
+  </div>
+
+  <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      projets.map((projet) => (
+        <li>
+          <a
+            href={projet.href}
+            class:list={[
+              'group bg-card relative flex h-full flex-col overflow-hidden rounded-xl border transition-all',
+              'hover:border-[color:var(--color-brand-400)] hover:shadow-xl',
+              'focus-visible:ring-2 focus-visible:ring-[color:var(--color-brand-400)] focus-visible:outline-none',
+            ]}
+          >
+            <div class="aspect-4/3 overflow-hidden">
+              <Image
+                src={projet.image}
+                alt={projet.titre}
+                widths={[400, 600, 900]}
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+            <div class="flex flex-1 flex-col p-6">
+              <p class="text-[color:var(--color-brand-600)] text-xs font-semibold tracking-wide uppercase">
+                {projet.categorie}
+              </p>
+              <h3 class="font-display mt-2 text-xl font-semibold">{projet.titre}</h3>
+              <p class="text-muted-foreground mt-2 text-sm leading-relaxed">{projet.description}</p>
+            </div>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>
