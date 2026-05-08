@@ -1,15 +1,158 @@
 ---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PagePlaceholder from '../components/PagePlaceholder.astro';
+
+const realisations = (await getCollection('realisations')).sort(
+  (a, b) => a.data.ordre - b.data.ordre,
+);
+
+const categorieLabels = {
+  residentiel: 'Résidentiel',
+  commercial: 'Commercial',
+  agricole: 'Agricole',
+  industriel: 'Industriel',
+  vehicules: 'Véhicules',
+} as const;
+
+type CategorieKey = keyof typeof categorieLabels;
+
+const categoriesPresentes = Array.from(
+  new Set(realisations.map((r) => r.data.categorie)),
+) as CategorieKey[];
 ---
 
 <BaseLayout
   title="Réalisations — Isolation EDKA"
-  description="Photos avant/après de nos chantiers : maisons, fermes, complexes industriels, hôpital, remorques. Voyez la différence."
+  description="Galerie de projets : maisons, fermes laitières, complexes industriels, hôpital, remorques. Avant / après et études de cas."
 >
-  <PagePlaceholder
-    surtitre="Notre travail"
-    titre="Réalisations récentes"
-    description="Maisons, fermes laitières, complexes industriels, hôpital de Saint-Georges, remorques. Avant / après en images."
-  />
+  <section class="bg-muted/40 border-b">
+    <div class="container-page py-20 sm:py-28">
+      <p class="text-[color:var(--color-brand-600)] text-sm font-semibold tracking-widest uppercase">
+        Notre travail
+      </p>
+      <h1 class="font-display mt-3 max-w-3xl text-4xl font-bold sm:text-5xl">
+        On laisse les chantiers parler.
+      </h1>
+      <p class="text-muted-foreground mt-4 max-w-2xl text-lg leading-relaxed">
+        Du chalet familial à l'hôpital régional en passant par les fermes laitières, chaque projet
+        a ses contraintes. Voici quelques chantiers récents — cliquez pour voir les détails et les
+        avant/après.
+      </p>
+    </div>
+  </section>
+
+  <section class="container-page py-16 sm:py-20">
+    <nav aria-label="Filtrer par catégorie" class="mb-8">
+      <ul class="flex flex-wrap gap-2">
+        <li>
+          <button
+            type="button"
+            data-filter="all"
+            aria-pressed="true"
+            class="border-border bg-card aria-pressed:bg-[color:var(--color-brand-600)] aria-pressed:border-[color:var(--color-brand-600)] aria-pressed:text-white inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors hover:border-[color:var(--color-brand-400)]"
+          >
+            Tous ({realisations.length})
+          </button>
+        </li>
+        {
+          categoriesPresentes.map((cat) => {
+            const count = realisations.filter((r) => r.data.categorie === cat).length;
+            return (
+              <li>
+                <button
+                  type="button"
+                  data-filter={cat}
+                  aria-pressed="false"
+                  class="border-border bg-card aria-pressed:bg-[color:var(--color-brand-600)] aria-pressed:border-[color:var(--color-brand-600)] aria-pressed:text-white inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors hover:border-[color:var(--color-brand-400)]"
+                >
+                  {categorieLabels[cat]} ({count})
+                </button>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+
+    <ul
+      id="realisations-grid"
+      class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+      aria-live="polite"
+    >
+      {
+        realisations.map((projet) => (
+          <li data-categorie={projet.data.categorie}>
+            <a
+              href={`/realisations/${projet.id}`}
+              class:list={[
+                'group bg-card relative flex h-full flex-col overflow-hidden rounded-xl border transition-all',
+                'hover:border-[color:var(--color-brand-400)] hover:shadow-xl',
+                'focus-visible:ring-2 focus-visible:ring-[color:var(--color-brand-400)] focus-visible:outline-none',
+              ]}
+            >
+              <div class="aspect-4/3 overflow-hidden">
+                <Image
+                  src={projet.data.photoPrincipale}
+                  alt={projet.data.photoPrincipaleAlt}
+                  widths={[400, 600, 900]}
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+              <div class="flex flex-1 flex-col p-6">
+                <div class="flex items-center gap-2 text-xs">
+                  <span class="text-[color:var(--color-brand-600)] font-semibold tracking-wide uppercase">
+                    {categorieLabels[projet.data.categorie]}
+                  </span>
+                  <span class="text-muted-foreground">·</span>
+                  <span class="text-muted-foreground">
+                    {projet.data.ville} · {projet.data.annee}
+                  </span>
+                </div>
+                <h2 class="font-display mt-2 text-xl font-semibold">{projet.data.titre}</h2>
+                <p class="text-muted-foreground mt-2 flex-1 text-sm leading-relaxed">
+                  {projet.data.resume}
+                </p>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p
+      id="realisations-empty"
+      hidden
+      class="text-muted-foreground mt-12 text-center text-sm"
+      role="status"
+    >
+      Aucun projet dans cette catégorie pour l'instant.
+    </p>
+  </section>
+
+  <script>
+    const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+    const items = document.querySelectorAll<HTMLLIElement>('[data-categorie]');
+    const empty = document.getElementById('realisations-empty');
+
+    const applyFilter = (filter: string): void => {
+      let visible = 0;
+      items.forEach((item) => {
+        const matches = filter === 'all' || item.dataset.categorie === filter;
+        item.hidden = !matches;
+        if (matches) visible += 1;
+      });
+      if (empty) empty.hidden = visible > 0;
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter ?? 'all';
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+        applyFilter(filter);
+      });
+    });
+  </script>
 </BaseLayout>

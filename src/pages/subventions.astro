@@ -1,15 +1,169 @@
 ---
+import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PagePlaceholder from '../components/PagePlaceholder.astro';
+
+const subventions = (await getCollection('subventions')).sort(
+  (a, b) => a.data.ordre - b.data.ordre,
+);
+
+const accentClasses = {
+  bleu: 'text-[color:var(--color-brand-600)] border-[color:var(--color-brand-200)] bg-[color:var(--color-brand-50)]',
+  vert: 'text-emerald-700 border-emerald-200 bg-emerald-50',
+  gris: 'text-slate-700 border-slate-200 bg-slate-50',
+} as const;
 ---
 
 <BaseLayout
   title="Programmes de subventions — Isolation EDKA"
-  description="Rénoclimat, Chauffez vert, LogisVert : profitez des programmes admissibles pour réduire le coût de vos travaux d'isolation."
+  description="Rénoclimat, LogisVert, Chauffez vert : on vous accompagne pour maximiser vos remboursements sur les travaux d'isolation au Québec."
 >
-  <PagePlaceholder
-    surtitre="Économisez plus"
-    titre="Programmes de subventions admissibles"
-    description="Rénoclimat, Chauffez vert, LogisVert — on vous accompagne dans le processus pour maximiser vos remboursements."
-  />
+  <section class="bg-muted/40 border-b">
+    <div class="container-page py-20 sm:py-28">
+      <p class="text-[color:var(--color-brand-600)] text-sm font-semibold tracking-widest uppercase">
+        Subventions disponibles
+      </p>
+      <h1 class="font-display mt-3 max-w-3xl text-4xl font-bold sm:text-5xl">
+        Vos travaux peuvent être en partie remboursés.
+      </h1>
+      <p class="text-muted-foreground mt-4 max-w-2xl text-lg leading-relaxed">
+        Au Québec, plusieurs programmes encouragent l'amélioration énergétique des bâtiments. On
+        connaît leurs critères, on connaît la paperasse, et on vous guide étape par étape pour
+        cumuler ce à quoi vous avez droit.
+      </p>
+    </div>
+  </section>
+
+  <section class="container-page py-16 sm:py-20">
+    <div class="space-y-8">
+      {
+        subventions.map(async (subvention) => {
+          const { Content } = await render(subvention);
+          const accent = accentClasses[subvention.data.couleurAccent];
+          return (
+            <article
+              id={subvention.id}
+              class="bg-card overflow-hidden rounded-2xl border shadow-sm"
+            >
+              <header class={`border-b px-6 py-6 sm:px-10 ${accent}`}>
+                <div class="flex flex-wrap items-center gap-3">
+                  <h2 class="font-display text-2xl font-bold sm:text-3xl">
+                    {subvention.data.nom}
+                  </h2>
+                  <span class="bg-card text-foreground inline-flex items-center rounded-md px-3 py-1 text-xs font-medium">
+                    {subvention.data.gestionnaire}
+                  </span>
+                </div>
+                <p class="mt-2 text-base font-medium">{subvention.data.descriptionCourte}</p>
+              </header>
+
+              <div class="grid gap-10 px-6 py-8 sm:px-10 sm:py-10 lg:grid-cols-3">
+                <div class="prose prose-slate text-foreground/90 max-w-none lg:col-span-2">
+                  <p class="font-display text-foreground text-base font-semibold">
+                    Montant maximal : {subvention.data.montantMax}
+                  </p>
+                  <Content />
+                  {subvention.data.lienOfficiel && (
+                    <p class="not-prose mt-6">
+                      <a
+                        href={subvention.data.lienOfficiel}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-[color:var(--color-brand-600)] hover:text-[color:var(--color-brand-700)] inline-flex items-center gap-1 text-sm font-semibold transition-colors"
+                      >
+                        Voir la page officielle du programme
+                        <svg
+                          aria-hidden="true"
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M7 7h10v10M7 17 17 7" />
+                        </svg>
+                      </a>
+                    </p>
+                  )}
+                </div>
+                <aside class="space-y-6 text-sm">
+                  <div>
+                    <h3 class="font-display text-foreground text-sm font-semibold tracking-wide uppercase">
+                      Admissibilité
+                    </h3>
+                    <ul class="mt-3 space-y-2">
+                      {subvention.data.admissibilite.map((critere) => (
+                        <li class="text-muted-foreground flex gap-2">
+                          <svg
+                            class="text-[color:var(--color-brand-600)] mt-0.5 h-4 w-4 flex-none"
+                            aria-hidden="true"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <path d="M20 6 9 17l-5-5" />
+                          </svg>
+                          <span>{critere}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 class="font-display text-foreground text-sm font-semibold tracking-wide uppercase">
+                      Travaux couverts
+                    </h3>
+                    <ul class="mt-3 space-y-2">
+                      {subvention.data.couvert.map((item) => (
+                        <li class="text-muted-foreground flex gap-2">
+                          <span
+                            class="text-[color:var(--color-brand-400)] mt-2 h-1.5 w-1.5 flex-none rounded-full bg-current"
+                            aria-hidden="true"
+                          />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </aside>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+  </section>
+
+  <section class="bg-muted/40 border-t">
+    <div class="container-page py-16 sm:py-20">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="font-display text-3xl font-bold sm:text-4xl">
+          On s'occupe de la paperasse.
+        </h2>
+        <p class="text-muted-foreground mt-4 text-lg leading-relaxed">
+          Évaluation énergétique, formulaires, suivi des remboursements : on coordonne le
+          processus de A à Z pour que vous puissiez vous concentrer sur le résultat plutôt que sur
+          les démarches.
+        </p>
+        <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+          <a
+            href="/contact"
+            class="bg-[color:var(--color-brand-600)] hover:bg-[color:var(--color-brand-500)] inline-flex items-center justify-center gap-2 rounded-md px-6 py-3 text-base font-semibold text-white transition-colors"
+          >
+            Vérifier mon admissibilité
+          </a>
+          <a
+            href="/services"
+            class="border-border bg-card hover:bg-muted inline-flex items-center justify-center gap-2 rounded-md border px-6 py-3 text-base font-semibold transition-colors"
+          >
+            Voir les services admissibles
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

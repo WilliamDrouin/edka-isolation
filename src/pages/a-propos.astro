@@ -1,15 +1,228 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PagePlaceholder from '../components/PagePlaceholder.astro';
+import hommeAuTravail from '../assets/images/equipe/hommeautravail.jpg';
+import commandite from '../assets/images/equipe/commanditepourlajeunesssportive.jpg';
+import merciClients from '../assets/images/equipe/formedecoeurmessagemercidevotreconfiance.jpg';
+
+const valeurs = [
+  {
+    titre: 'La performance avant le verbiage',
+    description:
+      "On ne vend pas de l'isolation, on livre des valeurs R, des kilowatts économisés, et des bâtiments confortables.",
+  },
+  {
+    titre: 'Local, fier, accessible',
+    description:
+      "Basés en Beauce, on parle directement avec nos clients — pas de centre d'appels, pas de runaround.",
+  },
+  {
+    titre: 'Le bon outil pour le bon projet',
+    description:
+      "Uréthane, cellulose, fibre — chaque technique a sa place. On recommande ce qui est juste, même si ça nous fait moins de marge.",
+  },
+  {
+    titre: "Engagement communautaire",
+    description:
+      "On commandite la jeunesse sportive locale et on prend le temps qu'il faut pour bien faire les choses dans notre coin de pays.",
+  },
+] as const;
+
+const certifications = [
+  {
+    nom: 'Licence RBQ',
+    detail: 'Régie du bâtiment du Québec — à confirmer',
+  },
+  {
+    nom: 'Uréthane SPFA',
+    detail: 'Spray Polyurethane Foam Alliance — formation continue',
+  },
+  {
+    nom: 'CCQ',
+    detail: 'Commission de la construction du Québec — équipe qualifiée',
+  },
+  {
+    nom: 'Rénoclimat',
+    detail: 'Entrepreneur reconnu pour les programmes de subventions énergétiques',
+  },
+] as const;
 ---
 
 <BaseLayout
   title="À propos — Isolation EDKA"
-  description="Histoire, équipe et certifications d'Isolation EDKA, spécialiste en isolation à Saint-Georges-de-Beauce."
+  description="Une équipe d'isolation basée à Saint-Georges-de-Beauce. Histoire, valeurs, certifications RBQ et engagement communautaire."
 >
-  <PagePlaceholder
-    surtitre="Notre histoire"
-    titre="L'équipe Isolation EDKA"
-    description="Une équipe locale, fière de la Beauce, certifiée RBQ et engagée dans la communauté."
-  />
+  <section class="bg-muted/40 border-b">
+    <div class="container-page py-20 sm:py-28">
+      <div class="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+        <div>
+          <p
+            class="text-[color:var(--color-brand-600)] text-sm font-semibold tracking-widest uppercase"
+          >
+            Notre histoire
+          </p>
+          <h1 class="font-display mt-3 text-4xl font-bold sm:text-5xl">
+            L'isolation, c'est notre métier. La Beauce, c'est notre maison.
+          </h1>
+          <p class="text-muted-foreground mt-4 max-w-xl text-lg leading-relaxed">
+            Isolation EDKA est une entreprise familiale fondée à Saint-Georges-de-Beauce. On
+            isole des maisons, des fermes, des commerces et des bâtiments industriels partout en
+            Chaudière-Appalaches — et on est fiers de chaque chantier qu'on signe.
+          </p>
+        </div>
+        <div class="aspect-4/3 overflow-hidden rounded-2xl shadow-xl ring-1 ring-black/5">
+          <Image
+            src={hommeAuTravail}
+            alt="Membre de l'équipe Isolation EDKA en train de travailler"
+            widths={[600, 900, 1200]}
+            sizes="(min-width: 1024px) 45vw, 100vw"
+            class="h-full w-full object-cover"
+            loading="eager"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-page py-20 sm:py-24">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="text-[color:var(--color-brand-600)] text-sm font-semibold tracking-widest uppercase">
+        Ce qui nous tient à cœur
+      </p>
+      <h2 class="font-display mt-3 text-3xl font-bold sm:text-4xl">Nos valeurs.</h2>
+    </div>
+    <ul class="mt-12 grid gap-6 sm:grid-cols-2">
+      {
+        valeurs.map((valeur) => (
+          <li class="bg-card rounded-xl border p-6">
+            <h3 class="font-display text-xl font-semibold">{valeur.titre}</h3>
+            <p class="text-muted-foreground mt-2 text-sm leading-relaxed">{valeur.description}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="bg-muted/30 border-y">
+    <div class="container-page py-20 sm:py-24">
+      <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
+        <div class="aspect-4/3 overflow-hidden rounded-2xl shadow-xl ring-1 ring-black/5">
+          <Image
+            src={commandite}
+            alt="Commandite communautaire d'Isolation EDKA pour la jeunesse sportive locale"
+            widths={[600, 900, 1200]}
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            class="h-full w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+        <div>
+          <p
+            class="text-[color:var(--color-brand-600)] text-sm font-semibold tracking-widest uppercase"
+          >
+            Engagement local
+          </p>
+          <h2 class="font-display mt-3 text-3xl font-bold sm:text-4xl">
+            On redonne à la communauté qui nous fait confiance.
+          </h2>
+          <p class="text-muted-foreground mt-4 text-lg leading-relaxed">
+            La jeunesse sportive de la Beauce, les organismes locaux, les événements
+            communautaires : Isolation EDKA commandite et participe activement à la vie de la
+            région. Parce qu'on n'est pas juste un fournisseur — on est des voisins.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-page py-20 sm:py-24">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="text-[color:var(--color-brand-600)] text-sm font-semibold tracking-widest uppercase">
+        Cadre professionnel
+      </p>
+      <h2 class="font-display mt-3 text-3xl font-bold sm:text-4xl">
+        Certifications & affiliations.
+      </h2>
+      <p class="text-muted-foreground mt-4 text-lg leading-relaxed">
+        On respecte les règles du métier — réglementation, formation continue, normes
+        d'application. Pour vous, ça veut dire : aucune surprise, aucun raccourci, et des travaux
+        garantis.
+      </p>
+    </div>
+    <ul class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        certifications.map((cert) => (
+          <li class="bg-card flex flex-col rounded-xl border p-5">
+            <span
+              class="bg-[color:var(--color-brand-50)] text-[color:var(--color-brand-700)] inline-flex h-10 w-10 items-center justify-center rounded-md"
+              aria-hidden="true"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m9 12 2 2 4-4" />
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </span>
+            <h3 class="font-display mt-4 text-lg font-semibold">{cert.nom}</h3>
+            <p class="text-muted-foreground mt-2 text-sm leading-relaxed">{cert.detail}</p>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="text-muted-foreground/80 mt-6 text-center text-xs italic">
+      Les numéros officiels et la liste exhaustive seront publiés une fois confirmés avec le
+      client.
+    </p>
+  </section>
+
+  <section class="dark text-foreground bg-background relative isolate overflow-hidden">
+    <Image
+      src={merciClients}
+      alt=""
+      aria-hidden="true"
+      widths={[640, 1280, 1920]}
+      sizes="100vw"
+      class="absolute inset-0 -z-10 h-full w-full object-cover opacity-25"
+      loading="lazy"
+    />
+    <div
+      class="absolute inset-0 -z-10 bg-gradient-to-r from-slate-950 via-slate-950/95 to-slate-950/80"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="container-page py-20 sm:py-24">
+      <div class="max-w-2xl">
+        <h2 class="font-display text-3xl font-bold sm:text-4xl">
+          Merci à tous les clients qui nous font confiance.
+        </h2>
+        <p class="mt-4 text-lg text-slate-300">
+          C'est grâce à vous qu'on continue d'investir dans l'équipement, la formation et le
+          service. Et c'est avec vous qu'on bâtit la prochaine génération de bâtiments performants
+          en Beauce.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a
+            href="/contact"
+            class="bg-[color:var(--color-brand-500)] hover:bg-[color:var(--color-brand-400)] inline-flex items-center justify-center gap-2 rounded-md px-6 py-3 text-base font-semibold text-slate-950 transition-colors"
+          >
+            Devenir client
+          </a>
+          <a
+            href="/realisations"
+            class="inline-flex items-center justify-center gap-2 rounded-md border border-white/30 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-white/10"
+          >
+            Voir nos réalisations
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
