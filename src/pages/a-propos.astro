@@ -7,6 +7,11 @@ import merciClients from '../assets/images/equipe/formedecoeurmessagemercidevotr
 
 const valeurs = [
   {
+    titre: "L'uréthane giclé bien fait",
+    description:
+      "C'est notre spécialité depuis le départ. On l'applique mieux que personne d'autre dans la région, point.",
+  },
+  {
     titre: 'La performance avant le verbiage',
     description:
       "On ne vend pas de l'isolation, on livre des valeurs R, des kilowatts économisés, et des bâtiments confortables.",
@@ -14,24 +19,19 @@ const valeurs = [
   {
     titre: 'Local, fier, accessible',
     description:
-      "Basés en Beauce, on parle directement avec nos clients — pas de centre d'appels, pas de runaround.",
+      "Basés à Saint-Georges, on parle directement avec nos clients — pas de centre d'appels, pas de runaround.",
   },
   {
-    titre: 'Le bon outil pour le bon projet',
+    titre: 'Engagés dans la Beauce',
     description:
-      "Uréthane, cellulose, fibre — chaque technique a sa place. On recommande ce qui est juste, même si ça nous fait moins de marge.",
-  },
-  {
-    titre: "Engagement communautaire",
-    description:
-      "On commandite la jeunesse sportive locale et on prend le temps qu'il faut pour bien faire les choses dans notre coin de pays.",
+      "Partenaire des Jays du Sud de la Beauce et présents dans la communauté qui nous fait vivre. On redonne au coin de pays qu'on aime.",
   },
 ] as const;
 
 const certifications = [
   {
     nom: 'Licence RBQ',
-    detail: 'Régie du bâtiment du Québec — à confirmer',
+    detail: '5790-3981-01 — Régie du bâtiment du Québec',
   },
   {
     nom: 'Uréthane SPFA',
@@ -62,13 +62,39 @@ const certifications = [
             Notre histoire
           </p>
           <h1 class="font-display mt-3 text-4xl font-bold sm:text-5xl">
-            L'isolation, c'est notre métier. La Beauce, c'est notre maison.
+            L'uréthane giclé, c'est notre métier. La Beauce, c'est notre maison.
           </h1>
           <p class="text-muted-foreground mt-4 max-w-xl text-lg leading-relaxed">
-            Isolation EDKA est une entreprise familiale fondée à Saint-Georges-de-Beauce. On
-            isole des maisons, des fermes, des commerces et des bâtiments industriels partout en
-            Chaudière-Appalaches — et on est fiers de chaque chantier qu'on signe.
+            <strong class="text-foreground">Isolation EDKA inc.</strong> est une entreprise locale
+            établie au 13650 59e Avenue à Saint-Georges-de-Beauce, spécialisée dans l'uréthane
+            giclé et les solutions d'isolation durables et performantes. On dessert le résidentiel,
+            le commercial et l'agricole partout en Chaudière-Appalaches.
           </p>
+          <dl class="mt-6 grid gap-4 sm:grid-cols-2">
+            <div class="border-border bg-card rounded-lg border p-4">
+              <dt
+                class="text-muted-foreground text-xs font-semibold tracking-widest uppercase"
+              >
+                Adresse
+              </dt>
+              <dd class="text-foreground mt-1 text-sm font-medium">
+                13650 59e Avenue<br />
+                Saint-Georges, QC G5Y 5B9
+              </dd>
+            </div>
+            <div class="border-border bg-card rounded-lg border p-4">
+              <dt
+                class="text-muted-foreground text-xs font-semibold tracking-widest uppercase"
+              >
+                Licence RBQ
+              </dt>
+              <dd
+                class="text-[color:var(--color-brand-700)] mt-1 font-mono text-sm font-semibold"
+              >
+                5790-3981-01
+              </dd>
+            </div>
+          </dl>
         </div>
         <div class="aspect-4/3 overflow-hidden rounded-2xl shadow-xl ring-1 ring-black/5">
           <Image
@@ -109,7 +135,7 @@ const certifications = [
         <div class="aspect-4/3 overflow-hidden rounded-2xl shadow-xl ring-1 ring-black/5">
           <Image
             src={commandite}
-            alt="Commandite communautaire d'Isolation EDKA pour la jeunesse sportive locale"
+            alt="Isolation EDKA, partenaire des Jays du Sud de la Beauce — baseball mineur"
             widths={[600, 900, 1200]}
             sizes="(min-width: 1024px) 50vw, 100vw"
             class="h-full w-full object-cover"
@@ -123,13 +149,22 @@ const certifications = [
             Engagement local
           </p>
           <h2 class="font-display mt-3 text-3xl font-bold sm:text-4xl">
-            On redonne à la communauté qui nous fait confiance.
+            Partenaires des Jays du Sud de la Beauce.
           </h2>
           <p class="text-muted-foreground mt-4 text-lg leading-relaxed">
-            La jeunesse sportive de la Beauce, les organismes locaux, les événements
-            communautaires : Isolation EDKA commandite et participe activement à la vie de la
-            région. Parce qu'on n'est pas juste un fournisseur — on est des voisins.
+            On commandite avec fierté l'<strong class="text-foreground">Association de baseball
+            mineur Jays du Sud de la Beauce</strong>, parce qu'investir dans la jeunesse
+            sportive, c'est investir dans la communauté qui nous fait vivre.
           </p>
+          <blockquote
+            class="border-[color:var(--color-brand-400)] mt-6 border-l-4 bg-card/60 px-5 py-4 text-base italic"
+          >
+            « Isolation EDKA, un partenaire de confiance qui, tout comme nous, investit dans
+            l'avenir… un projet à la fois ! »
+            <footer class="text-muted-foreground mt-2 text-xs not-italic">
+              — Jays du Sud de la Beauce
+            </footer>
+          </blockquote>
         </div>
       </div>
     </div>
@@ -177,10 +212,6 @@ const certifications = [
         ))
       }
     </ul>
-    <p class="text-muted-foreground/80 mt-6 text-center text-xs italic">
-      Les numéros officiels et la liste exhaustive seront publiés une fois confirmés avec le
-      client.
-    </p>
   </section>
 
   <section class="dark text-foreground bg-background relative isolate overflow-hidden">

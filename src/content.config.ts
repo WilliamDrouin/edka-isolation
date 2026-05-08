@@ -9,14 +9,8 @@ const services = defineCollection({
       ordre: z.number(),
       descriptionCourte: z.string(),
       valeurR: z.string().optional(),
-      icone: z.enum([
-        'spray',
-        'cellulose',
-        'fibre',
-        'combles',
-        'sous-sol',
-        'industriel',
-      ]),
+      icone: z.enum(['spray', 'sous-sol', 'entretoit', 'efficacite', 'confort']),
+      specialite: z.boolean().default(false),
       avantages: z.array(z.string()).min(1),
       applications: z.array(z.string()).min(1),
       admissibleSubvention: z.boolean().default(false),
@@ -40,7 +34,7 @@ const subventions = defineCollection({
   }),
 });
 
-type Categorie = 'residentiel' | 'commercial' | 'agricole' | 'industriel' | 'vehicules';
+type Categorie = 'residentiel' | 'commercial' | 'agricole';
 
 const realisations = defineCollection({
   loader: glob({ base: './src/content/realisations', pattern: '**/*.md' }),
@@ -52,8 +46,6 @@ const realisations = defineCollection({
         'residentiel',
         'commercial',
         'agricole',
-        'industriel',
-        'vehicules',
       ]) satisfies z.ZodType<Categorie>,
       ville: z.string(),
       annee: z.number().int(),

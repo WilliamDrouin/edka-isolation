@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import cabaneApres from '../../assets/images/realisations/cabaneapresisolation.jpg';
-import complexIndustriel from '../../assets/images/realisations/complexindustriel.jpg';
+import hopital from '../../assets/images/realisations/isolationhopitalstgeorges.jpg';
 import fermeLaitiere from '../../assets/images/realisations/fermelaitiereisolation.jpg';
 
 interface Projet {
@@ -16,23 +16,23 @@ const projets: readonly Projet[] = [
   {
     titre: 'Chalet rénové en Beauce',
     categorie: 'Résidentiel · Avant/Après',
-    description: 'Reprise complète de l\'enveloppe : combles, murs, sous-sol. Confort transformé.',
+    description: 'Reprise complète de l\'enveloppe : entretoit, murs, sous-sol. Confort transformé.',
     image: cabaneApres,
-    href: '/realisations',
+    href: '/realisations/chalet-renove-beauce',
   },
   {
-    titre: 'Complexe industriel',
+    titre: 'Hôpital de Saint-Georges',
     categorie: 'Commercial',
-    description: 'Isolation des plafonds et murs périphériques. Réduction des pertes thermiques de 35 %.',
-    image: complexIndustriel,
-    href: '/realisations',
+    description: 'Réfection partielle de l\'enveloppe en milieu institutionnel exigeant.',
+    image: hopital,
+    href: '/realisations/hopital-saint-georges',
   },
   {
     titre: 'Ferme laitière',
     categorie: 'Agricole',
     description: 'Étable et bâtiments de production : uréthane giclé pour une étanchéité maximale.',
     image: fermeLaitiere,
-    href: '/realisations',
+    href: '/realisations/ferme-laitiere',
   },
 ] as const;
 ---

@@ -5,11 +5,16 @@ interface Temoignage {
   contexte: string;
 }
 
-// Placeholder — vrais témoignages clients à intégrer plus tard
 const temoignages: readonly Temoignage[] = [
   {
     citation:
-      'Travail propre, rapide, et l\'équipe a pris le temps de tout expliquer. Ma facture de chauffage a baissé dès le premier hiver.',
+      "Isolation EDKA, un partenaire de confiance qui, tout comme nous, investit dans l'avenir… un projet à la fois !",
+    auteur: 'Jays du Sud de la Beauce',
+    contexte: 'Association de baseball mineur · Partenaire commanditaire',
+  },
+  {
+    citation:
+      "Travail propre, rapide, et l'équipe a pris le temps de tout expliquer. Ma facture de chauffage a baissé dès le premier hiver.",
     auteur: 'Marie-Claude L.',
     contexte: 'Maison résidentielle · Saint-Georges',
   },
@@ -18,12 +23,6 @@ const temoignages: readonly Temoignage[] = [
       "Pour notre ferme laitière, c'était un défi technique. Ils ont livré exactement ce qui était promis, dans les délais.",
     auteur: 'Jean-François R.',
     contexte: 'Ferme laitière · Beauce-Sartigan',
-  },
-  {
-    citation:
-      'On nous a guidés à travers les subventions Rénoclimat. Ça vaut son pesant d\'or quand on déteste la paperasse.',
-    auteur: 'Sylvie T.',
-    contexte: 'Rénovation maison · La Guadeloupe',
   },
 ] as const;
 ---
@@ -64,7 +63,4 @@ const temoignages: readonly Temoignage[] = [
     }
   </ul>
 
-  <p class="text-muted-foreground/80 mt-8 text-center text-xs italic">
-    Témoignages à valider avec le client avant publication.
-  </p>
 </section>

@@ -1,6 +1,6 @@
 ---
-titre: 'Sous-sols & vides sanitaires'
-ordre: 5
+titre: Isolation de sous-sol
+ordre: 2
 icone: sous-sol
 descriptionCourte: 'Murs de fondation, planchers froids, vides sanitaires — on s''attaque aux ponts thermiques.'
 valeurR: R-20 à R-30 selon les murs

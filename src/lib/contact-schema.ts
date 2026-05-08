@@ -4,7 +4,6 @@ export const typeProjetValues = [
   'residentiel',
   'commercial',
   'agricole',
-  'industriel',
   'autre',
 ] as const;
 
@@ -14,7 +13,6 @@ export const typeProjetLabels: Record<TypeProjet, string> = {
   residentiel: 'Résidentiel (maison, chalet)',
   commercial: 'Commercial (bureau, commerce)',
   agricole: 'Agricole (étable, ferme, grange)',
-  industriel: 'Industriel (entrepôt, usine)',
   autre: 'Autre / non sûr',
 };
 

@@ -1,11 +1,14 @@
-export type IconName = 'spray' | 'cellulose' | 'fibre' | 'combles' | 'sous-sol' | 'industriel';
+export type IconName = 'spray' | 'sous-sol' | 'entretoit' | 'efficacite' | 'confort';
 
 export const iconPaths: Record<IconName, string> = {
-  spray: 'M3 12c0-4.97 4.03-9 9-9s9 4.03 9 9v6a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-6Z M7 14l3 3 7-7',
-  cellulose:
-    'M12 2v4 M4.93 7.93l2.83 2.83 M19.07 7.93l-2.83 2.83 M2 14h4 M18 14h4 M5.5 19l3-3 M18.5 19l-3-3 M9 14a3 3 0 1 1 6 0c0 1.66-1.34 3-3 3s-3-1.34-3-3Z',
-  fibre: 'M3 6h18 M3 10h18 M3 14h18 M3 18h18',
-  combles: 'M3 12L12 3l9 9 M5 10v10h14V10',
+  // Bouclier coché — uréthane giclé / étanchéité
+  spray: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z M9 12l2 2 4-4',
+  // Cube avec niveaux — sous-sol / fondation
   'sous-sol': 'M3 7h18v10H3z M3 12h18 M9 7v10 M15 7v10',
-  industriel: 'M3 21V8l9-5 9 5v13 M9 21V12h6v9 M3 21h18',
+  // Maison à toit triangulaire — entretoit / combles
+  entretoit: 'M3 12L12 3l9 9 M5 10v10h14V10',
+  // Éclair — efficacité énergétique
+  efficacite: 'M13 2 3 14h9l-1 8 10-12h-9l1-8z',
+  // Thermomètre — confort thermique
+  confort: 'M14 14V4a2 2 0 0 0-4 0v10a4 4 0 1 0 4 0z M12 4v10',
 };

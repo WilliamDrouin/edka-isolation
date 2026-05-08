@@ -25,10 +25,10 @@ const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
   '@id': `${siteUrl}/#business`,
-  name: 'Isolation EDKA',
-  alternateName: 'EDKA Isolation',
+  name: 'Isolation EDKA inc.',
+  alternateName: 'Isolation EDKA',
   description:
-    "Spécialiste en isolation à Saint-Georges-de-Beauce. Uréthane giclé, cellulose, fibre de verre. Travaux résidentiels, commerciaux, agricoles et industriels.",
+    "Entreprise locale en Beauce spécialisée en uréthane giclé. Solutions d'isolation durables et performantes pour résidentiel, commercial et agricole. Licence RBQ 5790-3981-01.",
   url: siteUrl,
   logo: ogImage,
   image: ogImage,
@@ -37,8 +37,10 @@ const localBusinessSchema = {
   priceRange: '$$',
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Saint-Georges-de-Beauce',
+    streetAddress: '13650 59e Avenue',
+    addressLocality: 'Saint-Georges',
     addressRegion: 'QC',
+    postalCode: 'G5Y 5B9',
     addressCountry: 'CA',
   },
   geo: {
@@ -46,6 +48,7 @@ const localBusinessSchema = {
     latitude: 46.11,
     longitude: -70.68,
   },
+  sameAs: ['https://www.facebook.com/Isolationedka'],
   areaServed: [
     { '@type': 'AdministrativeArea', name: 'Saint-Georges-de-Beauce' },
     { '@type': 'AdministrativeArea', name: 'Beauce-Sartigan' },
@@ -62,15 +65,21 @@ const localBusinessSchema = {
   ],
   knowsAbout: [
     'Uréthane giclé',
-    'Cellulose soufflée',
-    'Fibre de verre',
-    'Isolation des combles',
     'Isolation de sous-sol',
+    "Isolation d'entretoit",
+    'Efficacité énergétique',
+    'Confort thermique',
+    'Isolation résidentielle',
     'Isolation commerciale',
     'Isolation agricole',
     'Programme Rénoclimat',
     'Programme LogisVert',
   ],
+  identifier: {
+    '@type': 'PropertyValue',
+    name: 'RBQ',
+    value: '5790-3981-01',
+  },
 };
 ---
 

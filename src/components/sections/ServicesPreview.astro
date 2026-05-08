@@ -1,59 +1,8 @@
 ---
-interface Service {
-  titre: string;
-  description: string;
-  href: string;
-  iconPath: string;
-}
+import { getCollection } from 'astro:content';
+import { iconPaths } from '../../lib/icons';
 
-const services: readonly Service[] = [
-  {
-    titre: 'Uréthane giclé',
-    description:
-      "Mousse polyuréthane projetée à haute valeur R, parfaite étanchéité à l'air et à l'humidité.",
-    href: '/services#urethane',
-    iconPath:
-      'M3 12c0-4.97 4.03-9 9-9s9 4.03 9 9v6a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-6Z M7 14l3 3 7-7',
-  },
-  {
-    titre: 'Cellulose soufflée',
-    description:
-      "Isolant écologique haute performance, idéal pour les combles et murs existants.",
-    href: '/services#cellulose',
-    iconPath:
-      'M12 2v4 M4.93 7.93l2.83 2.83 M19.07 7.93l-2.83 2.83 M2 14h4 M18 14h4 M5.5 19l3-3 M18.5 19l-3-3 M9 14a3 3 0 1 1 6 0c0 1.66-1.34 3-3 3s-3-1.34-3-3Z',
-  },
-  {
-    titre: 'Fibre de verre',
-    description:
-      'Solution éprouvée et économique pour murs, plafonds et planchers neufs.',
-    href: '/services#fibre-verre',
-    iconPath:
-      'M3 6h18 M3 10h18 M3 14h18 M3 18h18',
-  },
-  {
-    titre: 'Combles & toitures',
-    description:
-      "Réduisez les pertes de chaleur par le toit, là où l'air chaud s'échappe.",
-    href: '/services#combles',
-    iconPath: 'M3 12L12 3l9 9 M5 10v10h14V10',
-  },
-  {
-    titre: 'Sous-sols & vides sanitaires',
-    description:
-      "Murs de fondation, planchers froids, vides sanitaires : on s'attaque aux ponts thermiques.",
-    href: '/services#sous-sol',
-    iconPath: 'M3 7h18v10H3z M3 12h18 M9 7v10 M15 7v10',
-  },
-  {
-    titre: 'Commercial & industriel',
-    description:
-      "Bâtiments agricoles, complexes industriels, remorques et entrepôts. Solutions sur mesure.",
-    href: '/services#commercial',
-    iconPath:
-      'M3 21V8l9-5 9 5v13 M9 21V12h6v9 M3 21h18',
-  },
-] as const;
+const services = (await getCollection('services')).sort((a, b) => a.data.ordre - b.data.ordre);
 ---
 
 <section id="services" class="container-page py-20 sm:py-28">
@@ -62,25 +11,36 @@ const services: readonly Service[] = [
       Nos services
     </p>
     <h2 class="font-display mt-3 text-3xl font-bold sm:text-4xl">
-      Toutes les solutions d'isolation, sous un même toit.
+      L'uréthane giclé, et tout ce qui rend une maison performante.
     </h2>
     <p class="text-muted-foreground mt-4 text-lg">
-      Du résidentiel à l'industriel, on a la technique adaptée à chaque bâtiment.
+      Notre spécialité, c'est l'uréthane. Mais on vous accompagne aussi sur l'enveloppe au complet
+      — sous-sol, entretoit, efficacité énergétique et confort thermique.
     </p>
   </div>
 
-  <ul class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-stagger data-stagger-step="80">
+  <ul
+    class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+    data-stagger
+    data-stagger-step="80"
+  >
     {
       services.map((service) => (
         <li>
           <a
-            href={service.href}
+            href={`/services#${service.id}`}
             class:list={[
               'group bg-card relative flex h-full flex-col rounded-xl border p-6 transition-all',
               'hover:border-[color:var(--color-brand-400)] hover:shadow-lg hover:-translate-y-0.5',
               'focus-visible:ring-2 focus-visible:ring-[color:var(--color-brand-400)] focus-visible:outline-none',
+              service.data.specialite ? 'ring-1 ring-[color:var(--color-brand-200)]' : '',
             ]}
           >
+            {service.data.specialite && (
+              <span class="bg-[color:var(--color-brand-600)] absolute -top-2 right-6 inline-flex items-center rounded-full px-3 py-0.5 text-xs font-semibold text-white">
+                Spécialité
+              </span>
+            )}
             <span
               class="bg-[color:var(--color-brand-50)] text-[color:var(--color-brand-600)] inline-flex h-12 w-12 items-center justify-center rounded-lg"
               aria-hidden="true"
@@ -95,11 +55,13 @@ const services: readonly Service[] = [
                 stroke-linecap="round"
                 stroke-linejoin="round"
               >
-                <path d={service.iconPath} />
+                <path d={iconPaths[service.data.icone]} />
               </svg>
             </span>
-            <h3 class="font-display mt-5 text-xl font-semibold">{service.titre}</h3>
-            <p class="text-muted-foreground mt-2 text-sm leading-relaxed">{service.description}</p>
+            <h3 class="font-display mt-5 text-xl font-semibold">{service.data.titre}</h3>
+            <p class="text-muted-foreground mt-2 flex-1 text-sm leading-relaxed">
+              {service.data.descriptionCourte}
+            </p>
             <span
               class="text-[color:var(--color-brand-600)] mt-5 inline-flex items-center gap-1 text-sm font-semibold"
               aria-hidden="true"
