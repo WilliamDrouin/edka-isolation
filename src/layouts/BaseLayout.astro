@@ -19,6 +19,58 @@ const {
 const siteUrl = import.meta.env.PUBLIC_SITE_URL ?? 'https://isolation-edka.ca';
 const canonical = new URL(Astro.url.pathname, siteUrl).toString();
 const ogImage = new URL('/images/logoprincipale.jpg', siteUrl).toString();
+
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${siteUrl}/#business`,
+  name: 'Isolation EDKA',
+  alternateName: 'EDKA Isolation',
+  description:
+    "Spécialiste en isolation à Saint-Georges-de-Beauce. Uréthane giclé, cellulose, fibre de verre. Travaux résidentiels, commerciaux, agricoles et industriels.",
+  url: siteUrl,
+  logo: ogImage,
+  image: ogImage,
+  telephone: '+1-418-000-0000',
+  email: 'info@isolation-edka.ca',
+  priceRange: '$$',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Saint-Georges-de-Beauce',
+    addressRegion: 'QC',
+    addressCountry: 'CA',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 46.11,
+    longitude: -70.68,
+  },
+  areaServed: [
+    { '@type': 'AdministrativeArea', name: 'Saint-Georges-de-Beauce' },
+    { '@type': 'AdministrativeArea', name: 'Beauce-Sartigan' },
+    { '@type': 'AdministrativeArea', name: 'La Guadeloupe' },
+    { '@type': 'AdministrativeArea', name: 'Chaudière-Appalaches' },
+  ],
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '07:30',
+      closes: '17:00',
+    },
+  ],
+  knowsAbout: [
+    'Uréthane giclé',
+    'Cellulose soufflée',
+    'Fibre de verre',
+    'Isolation des combles',
+    'Isolation de sous-sol',
+    'Isolation commerciale',
+    'Isolation agricole',
+    'Programme Rénoclimat',
+    'Programme LogisVert',
+  ],
+};
 ---
 
 <!doctype html>
@@ -53,6 +105,8 @@ const ogImage = new URL('/images/logoprincipale.jpg', siteUrl).toString();
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   </head>
   <body>
     <Header transparent={transparentHeader} />
