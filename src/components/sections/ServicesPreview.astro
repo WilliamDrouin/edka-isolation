@@ -57,7 +57,7 @@ const services: readonly Service[] = [
 ---
 
 <section id="services" class="container-page py-20 sm:py-28">
-  <div class="mx-auto max-w-2xl text-center">
+  <div class="mx-auto max-w-2xl text-center" data-reveal>
     <p class="text-[color:var(--color-brand-600)] text-sm font-semibold tracking-widest uppercase">
       Nos services
     </p>
@@ -69,7 +69,7 @@ const services: readonly Service[] = [
     </p>
   </div>
 
-  <ul class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+  <ul class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-stagger data-stagger-step="80">
     {
       services.map((service) => (
         <li>

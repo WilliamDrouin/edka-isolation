@@ -9,7 +9,7 @@ const programmes = [
 <section id="subventions-teaser" class="bg-muted/40 border-y border-[color:var(--border)]">
   <div class="container-page py-20 sm:py-28">
     <div class="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:items-center">
-      <div>
+      <div data-reveal>
         <p class="text-[color:var(--color-brand-600)] text-sm font-semibold tracking-widest uppercase">
           Subventions disponibles
         </p>
@@ -49,7 +49,7 @@ const programmes = [
         </div>
       </div>
 
-      <ul class="grid gap-4 sm:grid-cols-3 lg:gap-6">
+      <ul class="grid gap-4 sm:grid-cols-3 lg:gap-6" data-stagger data-stagger-step="120">
         {
           programmes.map((p) => (
             <li class="bg-card flex h-full flex-col rounded-xl border p-5">

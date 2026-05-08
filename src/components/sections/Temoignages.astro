@@ -29,7 +29,7 @@ const temoignages: readonly Temoignage[] = [
 ---
 
 <section id="temoignages" class="container-page py-20 sm:py-28">
-  <div class="mx-auto max-w-2xl text-center">
+  <div class="mx-auto max-w-2xl text-center" data-reveal>
     <p class="text-[color:var(--color-brand-600)] text-sm font-semibold tracking-widest uppercase">
       Ils nous font confiance
     </p>
@@ -38,7 +38,7 @@ const temoignages: readonly Temoignage[] = [
     </h2>
   </div>
 
-  <ul class="mt-12 grid gap-6 lg:grid-cols-3">
+  <ul class="mt-12 grid gap-6 lg:grid-cols-3" data-stagger data-stagger-step="100">
     {
       temoignages.map((t) => (
         <li>

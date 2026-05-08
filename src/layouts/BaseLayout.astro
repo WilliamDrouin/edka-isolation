@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
@@ -107,6 +108,18 @@ const localBusinessSchema = {
     <meta name="twitter:image" content={ogImage} />
 
     <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+
+    <noscript>
+      <style>
+        [data-reveal],
+        [data-stagger] > * {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
+
+    <ClientRouter />
   </head>
   <body>
     <Header transparent={transparentHeader} />
@@ -114,5 +127,61 @@ const localBusinessSchema = {
       <slot />
     </main>
     <Footer />
+
+    <script>
+      import { animate, inView } from 'motion';
+
+      const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+      const animateReveal = (el: HTMLElement, delay = 0): void => {
+        animate(
+          el,
+          { opacity: [0, 1], transform: ['translate3d(0, 24px, 0)', 'translate3d(0, 0, 0)'] },
+          { duration: 0.85, delay, ease: easeOut },
+        );
+      };
+
+      const initReveal = (root: ParentNode = document): void => {
+        // Éléments simples [data-reveal]
+        root.querySelectorAll<HTMLElement>('[data-reveal]').forEach((el) => {
+          if (el.dataset.revealInit === 'true') return;
+          el.dataset.revealInit = 'true';
+          const delay = Number(el.dataset.revealDelay ?? '0') / 1000;
+          inView(el, () => animateReveal(el, delay), { amount: 0.18 });
+        });
+
+        // Stagger pour [data-stagger] : anime les enfants un à un
+        root.querySelectorAll<HTMLElement>('[data-stagger]').forEach((parent) => {
+          if (parent.dataset.staggerInit === 'true') return;
+          parent.dataset.staggerInit = 'true';
+          const children = Array.from(parent.children) as HTMLElement[];
+          const step = Number(parent.dataset.staggerStep ?? '90') / 1000;
+          inView(
+            parent,
+            () => {
+              children.forEach((child, idx) => animateReveal(child, idx * step));
+            },
+            { amount: 0.12 },
+          );
+        });
+      };
+
+      const reset = (root: ParentNode = document): void => {
+        root.querySelectorAll<HTMLElement>('[data-reveal]').forEach((el) => {
+          delete el.dataset.revealInit;
+        });
+        root.querySelectorAll<HTMLElement>('[data-stagger]').forEach((el) => {
+          delete el.dataset.staggerInit;
+        });
+      };
+
+      initReveal();
+
+      // Re-init après navigation via Astro view transitions
+      document.addEventListener('astro:after-swap', () => {
+        reset();
+        initReveal();
+      });
+    </script>
   </body>
 </html>

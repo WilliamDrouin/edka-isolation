@@ -48,7 +48,7 @@ const stats: readonly Stat[] = [
   </div>
 
   <div class="container-page">
-    <div class="mx-auto max-w-2xl text-center">
+    <div class="mx-auto max-w-2xl text-center" data-reveal>
       <p class="text-[color:var(--color-brand-300)] text-sm font-semibold tracking-widest uppercase">
         Performance thermique
       </p>
@@ -61,7 +61,7 @@ const stats: readonly Stat[] = [
       </p>
     </div>
 
-    <ul class="mt-16 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+    <ul class="mt-16 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4" data-stagger data-stagger-step="100">
       {
         stats.map((stat) => (
           <li class="text-center sm:text-left">

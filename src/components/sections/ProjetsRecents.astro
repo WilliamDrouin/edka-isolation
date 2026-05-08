@@ -38,7 +38,7 @@ const projets: readonly Projet[] = [
 ---
 
 <section id="realisations-preview" class="container-page py-20 sm:py-28">
-  <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between" data-reveal>
     <div class="max-w-xl">
       <p class="text-[color:var(--color-brand-600)] text-sm font-semibold tracking-widest uppercase">
         Projets récents
@@ -68,7 +68,7 @@ const projets: readonly Projet[] = [
     </a>
   </div>
 
-  <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-stagger data-stagger-step="100">
     {
       projets.map((projet) => (
         <li>
