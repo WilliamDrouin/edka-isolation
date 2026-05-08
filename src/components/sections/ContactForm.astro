@@ -1,0 +1,359 @@
+---
+import { typeProjetValues, typeProjetLabels } from '../../lib/contact-schema';
+---
+
+<section class="container-page py-16 sm:py-20">
+  <div class="grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
+    <div>
+      <p class="text-[color:var(--color-brand-600)] text-sm font-semibold tracking-widest uppercase">
+        Demande de soumission
+      </p>
+      <h2 class="font-display mt-3 text-3xl font-bold sm:text-4xl">
+        Parlez-nous de votre projet.
+      </h2>
+      <p class="text-muted-foreground mt-3 max-w-xl text-base leading-relaxed">
+        Remplissez ce formulaire et un membre de notre équipe vous contactera sous 24 à 48 heures
+        ouvrables. Tous les champs marqués d'un astérisque (<span aria-hidden="true">*</span>) sont
+        requis.
+      </p>
+
+      <form id="contact-form" class="mt-10 space-y-5" novalidate>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="nom" class="text-foreground block text-sm font-semibold">
+              Nom complet <span class="text-[color:var(--color-brand-600)]" aria-hidden="true">*</span>
+            </label>
+            <input
+              id="nom"
+              name="nom"
+              type="text"
+              required
+              autocomplete="name"
+              class="border-input bg-card focus:border-[color:var(--color-brand-500)] focus:ring-[color:var(--color-brand-200)] mt-2 block w-full rounded-md border px-3 py-2.5 text-sm shadow-sm transition-colors focus:ring-2 focus:outline-none aria-invalid:border-red-500 aria-invalid:ring-red-200"
+            />
+            <p class="mt-1 hidden text-sm text-red-600" data-error-for="nom"></p>
+          </div>
+          <div>
+            <label for="courriel" class="text-foreground block text-sm font-semibold">
+              Courriel <span class="text-[color:var(--color-brand-600)]" aria-hidden="true">*</span>
+            </label>
+            <input
+              id="courriel"
+              name="courriel"
+              type="email"
+              required
+              autocomplete="email"
+              class="border-input bg-card focus:border-[color:var(--color-brand-500)] focus:ring-[color:var(--color-brand-200)] mt-2 block w-full rounded-md border px-3 py-2.5 text-sm shadow-sm transition-colors focus:ring-2 focus:outline-none aria-invalid:border-red-500 aria-invalid:ring-red-200"
+            />
+            <p class="mt-1 hidden text-sm text-red-600" data-error-for="courriel"></p>
+          </div>
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="telephone" class="text-foreground block text-sm font-semibold">
+              Téléphone
+            </label>
+            <input
+              id="telephone"
+              name="telephone"
+              type="tel"
+              autocomplete="tel"
+              placeholder="(418) 555-1234"
+              class="border-input bg-card focus:border-[color:var(--color-brand-500)] focus:ring-[color:var(--color-brand-200)] mt-2 block w-full rounded-md border px-3 py-2.5 text-sm shadow-sm transition-colors focus:ring-2 focus:outline-none aria-invalid:border-red-500 aria-invalid:ring-red-200"
+            />
+            <p class="mt-1 hidden text-sm text-red-600" data-error-for="telephone"></p>
+          </div>
+          <div>
+            <label for="superficiePiedsCarres" class="text-foreground block text-sm font-semibold">
+              Superficie approximative (pi²)
+            </label>
+            <input
+              id="superficiePiedsCarres"
+              name="superficiePiedsCarres"
+              type="number"
+              min="1"
+              max="1000000"
+              inputmode="numeric"
+              placeholder="Ex : 1500"
+              class="border-input bg-card focus:border-[color:var(--color-brand-500)] focus:ring-[color:var(--color-brand-200)] mt-2 block w-full rounded-md border px-3 py-2.5 text-sm shadow-sm transition-colors focus:ring-2 focus:outline-none aria-invalid:border-red-500 aria-invalid:ring-red-200"
+            />
+            <p class="mt-1 hidden text-sm text-red-600" data-error-for="superficiePiedsCarres"></p>
+          </div>
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="typeProjet" class="text-foreground block text-sm font-semibold">
+              Type de projet <span class="text-[color:var(--color-brand-600)]" aria-hidden="true">*</span>
+            </label>
+            <select
+              id="typeProjet"
+              name="typeProjet"
+              required
+              class="border-input bg-card focus:border-[color:var(--color-brand-500)] focus:ring-[color:var(--color-brand-200)] mt-2 block w-full rounded-md border px-3 py-2.5 text-sm shadow-sm transition-colors focus:ring-2 focus:outline-none aria-invalid:border-red-500 aria-invalid:ring-red-200"
+            >
+              <option value="">— Choisir —</option>
+              {
+                typeProjetValues.map((value) => (
+                  <option value={value}>{typeProjetLabels[value]}</option>
+                ))
+              }
+            </select>
+            <p class="mt-1 hidden text-sm text-red-600" data-error-for="typeProjet"></p>
+          </div>
+          <div>
+            <label for="typeBatiment" class="text-foreground block text-sm font-semibold">
+              Type de bâtiment (précisions)
+            </label>
+            <input
+              id="typeBatiment"
+              name="typeBatiment"
+              type="text"
+              placeholder="Maison neuve, sous-sol, étable…"
+              class="border-input bg-card focus:border-[color:var(--color-brand-500)] focus:ring-[color:var(--color-brand-200)] mt-2 block w-full rounded-md border px-3 py-2.5 text-sm shadow-sm transition-colors focus:ring-2 focus:outline-none aria-invalid:border-red-500 aria-invalid:ring-red-200"
+            />
+            <p class="mt-1 hidden text-sm text-red-600" data-error-for="typeBatiment"></p>
+          </div>
+        </div>
+
+        <div>
+          <label for="message" class="text-foreground block text-sm font-semibold">
+            Décrivez votre projet <span class="text-[color:var(--color-brand-600)]" aria-hidden="true">*</span>
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            required
+            rows="5"
+            placeholder="Quelques mots sur l'état actuel, ce que vous cherchez à améliorer, votre échéancier souhaité…"
+            class="border-input bg-card focus:border-[color:var(--color-brand-500)] focus:ring-[color:var(--color-brand-200)] mt-2 block w-full rounded-md border px-3 py-2.5 text-sm shadow-sm transition-colors focus:ring-2 focus:outline-none aria-invalid:border-red-500 aria-invalid:ring-red-200"
+          ></textarea>
+          <p class="mt-1 hidden text-sm text-red-600" data-error-for="message"></p>
+        </div>
+
+        <div class="hidden" aria-hidden="true">
+          <label for="siteWeb">Site web (laisser vide)</label>
+          <input id="siteWeb" name="siteWeb" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <p
+          id="form-message"
+          class="hidden rounded-md border px-4 py-3 text-sm"
+          role="status"
+          aria-live="polite"
+        >
+        </p>
+
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <p class="text-muted-foreground text-xs">
+            En soumettant ce formulaire, vous acceptez d'être contacté par Isolation EDKA au sujet
+            de votre demande.
+          </p>
+          <button
+            type="submit"
+            id="form-submit"
+            class="bg-[color:var(--color-brand-600)] hover:bg-[color:var(--color-brand-500)] focus-visible:ring-[color:var(--color-brand-400)] inline-flex items-center justify-center gap-2 rounded-md px-6 py-3 text-base font-semibold text-white transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <span data-submit-label>Envoyer ma demande</span>
+            <svg
+              data-submit-spinner
+              class="hidden h-4 w-4 animate-spin"
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" stroke-opacity="0.25" />
+              <path
+                d="M22 12a10 10 0 0 0-10-10"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+        </div>
+      </form>
+
+      <div
+        id="form-success"
+        hidden
+        class="border-[color:var(--color-brand-200)] bg-[color:var(--color-brand-50)] mt-10 rounded-2xl border p-8"
+      >
+        <div class="flex items-start gap-4">
+          <span
+            class="bg-[color:var(--color-brand-600)] inline-flex h-10 w-10 flex-none items-center justify-center rounded-full text-white"
+            aria-hidden="true"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 6 9 17l-5-5" />
+            </svg>
+          </span>
+          <div>
+            <h3 class="font-display text-foreground text-xl font-semibold">
+              Merci, votre demande a bien été reçue !
+            </h3>
+            <p class="text-muted-foreground mt-2 text-sm leading-relaxed">
+              Un membre de notre équipe vous contactera sous 24 à 48 heures ouvrables. D'ici là,
+              n'hésitez pas à parcourir nos
+              <a href="/realisations" class="text-[color:var(--color-brand-700)] underline">
+                réalisations
+              </a>.
+            </p>
+            <p
+              id="form-success-demo"
+              hidden
+              class="text-muted-foreground/80 mt-3 text-xs italic"
+            >
+              Mode démo : la soumission a été validée et journalisée côté serveur, mais aucun
+              courriel n'a été envoyé (clé Resend non configurée).
+            </p>
+            <button
+              type="button"
+              id="form-reset"
+              class="text-[color:var(--color-brand-700)] hover:text-[color:var(--color-brand-800)] mt-4 inline-flex items-center gap-1 text-sm font-semibold underline"
+            >
+              Envoyer une autre demande
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <slot />
+  </div>
+</section>
+
+<script>
+  import { contactSchema } from '../../lib/contact-schema';
+
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const successPanel = document.getElementById('form-success') as HTMLElement | null;
+  const successDemo = document.getElementById('form-success-demo') as HTMLElement | null;
+  const resetBtn = document.getElementById('form-reset') as HTMLButtonElement | null;
+  const submitBtn = document.getElementById('form-submit') as HTMLButtonElement | null;
+  const submitLabel = document.querySelector<HTMLElement>('[data-submit-label]');
+  const submitSpinner = document.querySelector<HTMLElement>('[data-submit-spinner]');
+  const formMessage = document.getElementById('form-message') as HTMLElement | null;
+
+  if (!form || !successPanel || !resetBtn || !submitBtn || !submitLabel || !submitSpinner || !formMessage || !successDemo) {
+    throw new Error('Contact form: required DOM elements missing');
+  }
+
+  const setFieldError = (field: string, message: string | null): void => {
+    const input = form.elements.namedItem(field) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | null;
+    const errorEl = form.querySelector<HTMLElement>(`[data-error-for="${field}"]`);
+    if (input) input.setAttribute('aria-invalid', message ? 'true' : 'false');
+    if (errorEl) {
+      errorEl.textContent = message ?? '';
+      errorEl.classList.toggle('hidden', !message);
+    }
+  };
+
+  const clearAllErrors = (): void => {
+    form.querySelectorAll<HTMLElement>('[data-error-for]').forEach((el) => {
+      el.textContent = '';
+      el.classList.add('hidden');
+    });
+    form.querySelectorAll('[aria-invalid="true"]').forEach((el) => {
+      el.setAttribute('aria-invalid', 'false');
+    });
+    formMessage.hidden = true;
+    formMessage.textContent = '';
+    formMessage.className = 'hidden rounded-md border px-4 py-3 text-sm';
+  };
+
+  const setSubmitting = (submitting: boolean): void => {
+    submitBtn.disabled = submitting;
+    submitLabel.textContent = submitting ? 'Envoi en cours…' : 'Envoyer ma demande';
+    submitSpinner.classList.toggle('hidden', !submitting);
+  };
+
+  const showFormMessage = (message: string, kind: 'error' | 'info'): void => {
+    formMessage.textContent = message;
+    formMessage.hidden = false;
+    formMessage.className = `rounded-md border px-4 py-3 text-sm ${
+      kind === 'error'
+        ? 'border-red-200 bg-red-50 text-red-800'
+        : 'border-slate-200 bg-slate-50 text-slate-800'
+    }`;
+  };
+
+  const showSuccess = (demoMode: boolean): void => {
+    form.hidden = true;
+    successPanel.hidden = false;
+    successDemo.hidden = !demoMode;
+    successPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+
+  resetBtn.addEventListener('click', () => {
+    form.reset();
+    form.hidden = false;
+    successPanel.hidden = true;
+    clearAllErrors();
+    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    clearAllErrors();
+
+    const formData = new FormData(form);
+    const raw = Object.fromEntries(formData.entries());
+
+    const result = contactSchema.safeParse(raw);
+    if (!result.success) {
+      const issues = result.error.issues;
+      let firstField: string | null = null;
+      for (const issue of issues) {
+        const field = issue.path[0];
+        if (typeof field === 'string') {
+          setFieldError(field, issue.message);
+          if (!firstField) firstField = field;
+        }
+      }
+      if (firstField) {
+        const input = form.elements.namedItem(firstField);
+        if (input instanceof HTMLElement) input.focus();
+      }
+      return;
+    }
+
+    setSubmitting(true);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(result.data),
+      });
+
+      const payload = (await response.json()) as
+        | { ok: true; demoMode: boolean }
+        | { ok: false; errors?: Record<string, string>; message?: string };
+
+      if (payload.ok) {
+        showSuccess(payload.demoMode);
+        return;
+      }
+
+      if (payload.errors) {
+        for (const [field, msg] of Object.entries(payload.errors)) {
+          setFieldError(field, msg);
+        }
+      }
+      showFormMessage(
+        payload.message ?? 'Veuillez corriger les champs en erreur ci-dessus.',
+        'error',
+      );
+    } catch (error) {
+      console.error('[contact-form]', error);
+      showFormMessage(
+        "L'envoi a échoué. Vérifiez votre connexion ou réessayez dans un instant.",
+        'error',
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  });
+</script>
